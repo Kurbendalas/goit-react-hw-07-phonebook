@@ -1,11 +1,15 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { contactsReducer } from "./contactsSlice";
-import { filtersReducer } from "./filterSlice";
+import { filterReducer } from "./filterSlice";
+import logger from 'redux-logger'
 
+const rootReducer = combineReducers( {
+    contacts: contactsReducer,
+    filter: filterReducer,
+})
 
 export const store = configureStore({
-  reducer: {
-    contacts: contactsReducer,
-    filter: filtersReducer,
-  },
+  reducer: rootReducer,
+   middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(logger)
 });
